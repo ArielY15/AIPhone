@@ -1,0 +1,30 @@
+﻿<Page x:Class="AIPhone.SpeechPage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Height="1366" Width="768">
+    <Grid x:Name="BackPanel">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="18.3*"/>
+            <RowDefinition Height="50.0*"/>
+            <RowDefinition Height="30.7*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.Background>
+                <ImageBrush ImageSource="Assets/171_ai_banner1.png" Stretch="UniformToFill"/>
+            </Grid.Background>
+            <Button Content="Button" HorizontalAlignment="Left" Height="70" Margin="76,61,0,0" VerticalAlignment="Top" Width="146" />
+        </Grid>
+        <Grid Grid.Row="1">
+            <MediaElement x:Name="video" Source="Assets/Videos/Earth.mp4" Stretch="UniformToFill"/>
+            <Grid.Background>
+                <ImageBrush ImageSource="Assets/Earth.jpg" Stretch="UniformToFill"/>
+            </Grid.Background>
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.Background>
+                <ImageBrush ImageSource="Assets/171_ai_banner2.png" Stretch="UniformToFill"/>
+            </Grid.Background>
+            <Label Content="Your mission is to disarm &#xD;&#xA;missiles headed to the &#xD;&#xA;following cities. &#xD;&#xA;Say the code names for each &#xD;&#xA;city to save it."   HorizontalAlignment="Left" Margin="42,42,0,0" VerticalAlignment="Top" Foreground="White" FontWeight="Bold" FontSize="48" Height="351"/>
+        </Grid>
+    </Grid>
+</Page>

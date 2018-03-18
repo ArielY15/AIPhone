@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2027
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AIPhone", "AIPhone\AIPhone.csproj", "{D0139633-C3F5-46D9-9620-475DFE115DE1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D0139633-C3F5-46D9-9620-475DFE115DE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0139633-C3F5-46D9-9620-475DFE115DE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0139633-C3F5-46D9-9620-475DFE115DE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0139633-C3F5-46D9-9620-475DFE115DE1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {36CE051F-30D9-4A56-B2C2-34DDB03DF4BC}
+	EndGlobalSection
+EndGlobal
