@@ -32,6 +32,7 @@ namespace AIPhone
         Face[] faces;
         IEnumerable<WebCameraId> cameraIds;
         double resizeFactor;
+        string agentName;
 
         public bool detected = false;
         public FacePage()
@@ -84,41 +85,6 @@ namespace AIPhone
             VoiceInstructionsManager.OpenThePhone(webCameraControl);
 
             video.Play();
-            Thread.Sleep(5000);
-            video.BeginAnimation(
-                     OpacityProperty,
-                        new DoubleAnimation(1d, 0d, new Duration(TimeSpan.FromSeconds(2d))));
-            Thread.Sleep(2000);
-            video.Visibility = Visibility.Hidden;
-            Center.Visibility = Visibility.Visible;
-            Bitmap image;
-            do
-            {
-                image = webCameraControl.GetCurrentImage();
-                image.Save(@"Assets/image.bmp");
-                faces = await faceRecManager.UploadAndDetectFaces(image);
-                if (faces.Length > 0)
-                {
-                    detected = true;
-                    BitmapSource bs = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(
-                        image.GetHbitmap(),
-                        IntPtr.Zero,
-                        Int32Rect.Empty,
-                        BitmapSizeOptions.FromWidthAndHeight(image.Width, image.Height));
-                    imageCanvas.Visibility = Visibility.Visible;
-                    webCameraControl.Visibility = Visibility.Hidden;
-                    DrawRectangle(bs);
-                    DisplayDescription();
-                }
-                Thread.Sleep(10000);
-            } while (!detected);
-
-            Thread.Sleep(20000);
-            NavigationService navService = NavigationService.GetNavigationService(this);
-
-            SpeechPage nextPage = new SpeechPage();
-
-            navService.Navigate(nextPage);
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -211,6 +177,56 @@ namespace AIPhone
             neutral.Content = faces[0].FaceAttributes.Emotion.Neutral.ToString();
             sadness.Content = faces[0].FaceAttributes.Emotion.Sadness.ToString();
             surprise.Content = faces[0].FaceAttributes.Emotion.Surprise.ToString();
+        }
+
+        private async void video_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            video.Visibility = Visibility.Hidden;
+            Center.Visibility = Visibility.Visible;
+            Bitmap image;
+            do
+            {
+                image = webCameraControl.GetCurrentImage();
+                //image.Save(@"Assets/image.bmp");
+                faces = await faceRecManager.UploadAndDetectFaces(image);
+                if (faces.Length > 0)
+                {
+                    detected = true;
+                    BitmapSource bs = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(
+                        image.GetHbitmap(),
+                        IntPtr.Zero,
+                        Int32Rect.Empty,
+                        BitmapSizeOptions.FromWidthAndHeight(image.Width, image.Height));
+                    imageCanvas.Visibility = Visibility.Visible;
+                    webCameraControl.Visibility = Visibility.Hidden;
+                    DrawRectangle(bs);
+                    DisplayDescription();
+
+                    Guid[] guids = new Guid[faces.Length];
+                    int i = 0;
+                    foreach (Face face in faces)
+                    {
+                        guids[i++] = face.FaceId;
+                    }
+
+
+                    if (await faceRecManager.isGroupTrained())
+                    {
+                        agentName = await faceRecManager.FindAgentName(guids);
+                        InstructionLabel.Content = "Welcome Agent " + agentName + "!";
+                    }
+                    else
+                        InstructionLabel.Content = "Welcome Agent 007!";
+                }
+                await Task.Delay(1000);
+            } while (!detected);
+
+            Thread.Sleep(20000);
+            NavigationService navService = NavigationService.GetNavigationService(this);
+
+            SpeechPage nextPage = new SpeechPage();
+
+            navService.Navigate(nextPage);
         }
     }
 }

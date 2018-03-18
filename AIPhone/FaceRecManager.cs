@@ -14,7 +14,9 @@ namespace AIPhone
     class FaceRecManager
     {
         private readonly IFaceServiceClient faceServiceClient =
-          new FaceServiceClient("52332b94d50e47c8ad09b045252774f1", "https://westcentralus.api.cognitive.microsoft.com/face/v1.0");
+          new FaceServiceClient("d9d7d017ef4c427ebb0b3aa881a5447b", "https://westcentralus.api.cognitive.microsoft.com/face/v1.0/");
+
+        private string persongroupid = "aiphone";
 
         //// Returns a string that describes the given face.
 
@@ -102,5 +104,38 @@ namespace AIPhone
             }
         }
 
+        public async Task<String> FindAgentName(Guid[] FaceId)
+        {
+            IdentifyResult[] res = await faceServiceClient.IdentifyAsync(persongroupid, FaceId);
+            Guid bestGuess = new Guid();
+            foreach (var result in res)
+            {
+                double maxConfidence = 0;
+                
+                foreach(var candidate in result.Candidates)
+                {
+                    if (candidate.Confidence > maxConfidence)
+                    {
+                        maxConfidence = candidate.Confidence;
+                        bestGuess = candidate.PersonId;
+                    }
+                }
+            }
+            Person person = await faceServiceClient.GetPersonInPersonGroupAsync(persongroupid, bestGuess);
+            return person.Name;
+        }
+
+        public async Task<bool> isGroupTrained()
+        {
+            try
+            {
+                TrainingStatus ts = await faceServiceClient.GetPersonGroupTrainingStatusAsync(persongroupid);
+                return (ts.Status == Status.Succeeded);
+            }
+            catch (FaceAPIException)
+            {
+                return false;
+            }
+        }
     }
 }
