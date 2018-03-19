@@ -32,7 +32,7 @@
             <Grid.Background>
                 <ImageBrush ImageSource="Assets/171_ai_banner2.png" Stretch="UniformToFill"/>
             </Grid.Background>
-            <Label Content="Facial recognition initiated. &#xD;&#xA;Look at the screen while &#xD;&#xA;your identity is being verified.&#xA;"   HorizontalAlignment="Left" Margin="42,42,0,0" VerticalAlignment="Top" Foreground="White" FontWeight="Bold" FontSize="48" Height="216"/>
+            <Label Content="In order to initiate the &#xD;&#xA;self-destruction protocol, &#xD;&#xA;use your secrete marker to &#xD;&#xA;remove unnecessary data &#xD;&#xA;from the code page." HorizontalAlignment="Left" Margin="42,42,0,0" VerticalAlignment="Top" Foreground="White" FontWeight="Bold" FontSize="48" Height="372"/>
         </Grid>
     </Grid>
 </Page>

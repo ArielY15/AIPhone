@@ -5,12 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using WebEye.Controls.Wpf;
 
 namespace AIPhone
@@ -22,7 +16,6 @@ namespace AIPhone
     {
         private IEnumerable<WebCameraId> cameraIds;
         private OCRRecMananger ocrRecMananger;
-        
 
         public OcrRec()
         {
@@ -33,10 +26,8 @@ namespace AIPhone
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
             cameraIds = webCameraControl.GetVideoCaptureDevices();
-            var cameraIdEnum = cameraIds.GetEnumerator();
-            while (cameraIdEnum.Current == null)
-                cameraIdEnum.MoveNext();
-            webCameraControl.StartCapture(cameraIdEnum.Current);
+
+            webCameraControl.StartCapture(cameraIds.Last());
 
             var detected = false;
             do

@@ -137,9 +137,6 @@
       <DependentUpon>FacePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="FaceRecManager.cs" />
-    <Compile Include="FaceRecMission.xaml.cs">
-      <DependentUpon>FaceRecMission.xaml</DependentUpon>
-    </Compile>
     <Compile Include="OcrRec.xaml.cs">
       <DependentUpon>OcrRec.xaml</DependentUpon>
     </Compile>
@@ -150,10 +147,6 @@
     <Compile Include="SpeechRecManager.cs" />
     <Compile Include="VoiceInstructionsManager.cs" />
     <Page Include="FacePage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="FaceRecMission.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -215,6 +208,7 @@
     <Content Include="Assets\Earth.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Assets\Missile.png" />
     <Content Include="Assets\Sounds\missionAI1.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

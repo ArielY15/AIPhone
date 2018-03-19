@@ -57,6 +57,11 @@ namespace AIPhone
             Thread.Sleep(2000);
         }
 
+        public void TryAgain()
+        {
+
+        }
+
         public double getDominantColor(Bitmap bmp)
         {
             //Used for tally

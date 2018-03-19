@@ -121,8 +121,12 @@ namespace AIPhone
                     }
                 }
             }
-            Person person = await faceServiceClient.GetPersonInPersonGroupAsync(persongroupid, bestGuess);
-            return person.Name;
+            if (!bestGuess.Equals(new Guid()))
+            {
+                Person person = await faceServiceClient.GetPersonInPersonGroupAsync(persongroupid, bestGuess);
+                return person.Name;
+            }
+            return "007";
         }
 
         public async Task<bool> isGroupTrained()

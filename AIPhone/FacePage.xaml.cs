@@ -32,7 +32,7 @@ namespace AIPhone
         Face[] faces;
         IEnumerable<WebCameraId> cameraIds;
         double resizeFactor;
-        string agentName;
+        string agentName = "007";
 
         public bool detected = false;
         public FacePage()
@@ -73,15 +73,20 @@ namespace AIPhone
                 VoiceInstructionsManager.code = true;
                 runMission();
             }
+            else if (recieved_data.Equals("TryAgain"))
+            {
+                VoiceInstructionsManager.TryAgain();
+            }
         }
 
-        private async void runMission()
+        private void runMission()
         {
             cameraIds = webCameraControl.GetVideoCaptureDevices();
-            var cameraIdEnum = cameraIds.GetEnumerator();
-            while (cameraIdEnum.Current == null)
-                cameraIdEnum.MoveNext();
-            webCameraControl.StartCapture(cameraIdEnum.Current);
+            //cameraIds.
+            //var cameraIdEnum = cameraIds.GetEnumerator();
+            //while (cameraIdEnum.Current == null)
+            //    cameraIdEnum.MoveNext();
+            webCameraControl.StartCapture(cameraIds.Last<WebCameraId>());
             VoiceInstructionsManager.OpenThePhone(webCameraControl);
 
             video.Play();
@@ -167,7 +172,7 @@ namespace AIPhone
             descriptionGrid.Visibility = Visibility.Visible;
             age.Content = faces[0].FaceAttributes.Age.ToString();
             gender.Content = faces[0].FaceAttributes.Gender.ToString();
-            facialHair.Content = faces[0].FaceAttributes.FacialHair.ToString();
+            facialHair.Content = faces[0].FaceAttributes.FacialHair.Beard.ToString();
             glasses.Content = faces[0].FaceAttributes.Glasses.ToString();
             anger.Content = faces[0].FaceAttributes.Emotion.Anger.ToString();
             contempt.Content = faces[0].FaceAttributes.Emotion.Contempt.ToString();
@@ -187,7 +192,6 @@ namespace AIPhone
             do
             {
                 image = webCameraControl.GetCurrentImage();
-                //image.Save(@"Assets/image.bmp");
                 faces = await faceRecManager.UploadAndDetectFaces(image);
                 if (faces.Length > 0)
                 {
@@ -213,20 +217,24 @@ namespace AIPhone
                     if (await faceRecManager.isGroupTrained())
                     {
                         agentName = await faceRecManager.FindAgentName(guids);
-                        InstructionLabel.Content = "Welcome Agent " + agentName + "!";
+                        
                     }
-                    else
-                        InstructionLabel.Content = "Welcome Agent 007!";
+
+                    InstructionLabel.Content = "Welcome Agent " + agentName + "!";
                 }
                 await Task.Delay(1000);
             } while (!detected);
 
-            Thread.Sleep(20000);
+            await Task.Delay(20000);
+
+            webCameraControl.StopCapture();
+
             NavigationService navService = NavigationService.GetNavigationService(this);
 
             SpeechPage nextPage = new SpeechPage();
 
             navService.Navigate(nextPage);
         }
+
     }
 }
