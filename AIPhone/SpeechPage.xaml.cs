@@ -24,10 +24,13 @@ namespace AIPhone
 
         private List<String> wordsToDetect;
 
+        private bool isDone;
+        private object isDoneLocker = new object();
+
         public SpeechPage()
         {
             InitializeComponent();
-
+            isDone = false;
             speechManager = new SpeechRecManager();
             speechManager.PartialResponseReceived += TextArrived;
             speechManager.ResponseReceived += TextArrived;
@@ -78,6 +81,12 @@ namespace AIPhone
 
         private async void done()
         {
+            lock (isDoneLocker)
+            {
+                if (isDone) return;
+                isDone = true;
+            }
+            speechManager.Stop();
             InstructionLabel.Content = "Congratulations all missiles are disabled!";
             await Task.Delay(10000);
 
