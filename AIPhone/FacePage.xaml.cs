@@ -4,20 +4,16 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO.Ports;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 using WebEye.Controls.Wpf;
+
 
 namespace AIPhone
 {
@@ -27,7 +23,7 @@ namespace AIPhone
     public partial class FacePage : Page
     {
         SerialPort serial;
-        VoiceInstructionsManager VoiceInstructionsManager;
+        VoiceInstructionsManager voiceInstructionsManager;
         FaceRecManager faceRecManager;
         Face[] faces;
         IEnumerable<WebCameraId> cameraIds;
@@ -35,11 +31,13 @@ namespace AIPhone
         string agentName = "007";
 
         public bool detected = false;
+
+
         public FacePage()
         {
             InitializeComponent();
             SetSerial();
-            VoiceInstructionsManager = VoiceInstructionsManager.Instance;
+            voiceInstructionsManager = VoiceInstructionsManager.Instance;
             video.LoadedBehavior = MediaState.Manual;
             video.Stop();
             faceRecManager = new FaceRecManager();
@@ -57,69 +55,41 @@ namespace AIPhone
                 StopBits = StopBits.One,
                 ReadTimeout = 200,
                 WriteTimeout = 50
-            };
+            };         
             serial.DataReceived += new SerialDataReceivedEventHandler(RecieveSerial);
+            serial.Open();
+
         }
 
         private void RecieveSerial(object sender, SerialDataReceivedEventArgs e)
         {
-            string recieved_data = serial.ReadExisting();
-            if (recieved_data.Equals("EnterCode"))
+            string recieved_data = serial.ReadLine();
+            if (recieved_data.Contains("EnterCode"))
             {
-                VoiceInstructionsManager.EnterCode();
-            }
-            else if (recieved_data.Equals("OpenThePhone"))
+                voiceInstructionsManager.EnterCode();
+             }
+            if (recieved_data.Contains("OpenThePhone"))
             {
-                VoiceInstructionsManager.code = true;
-                runMission();
-            }
-            else if (recieved_data.Equals("TryAgain"))
-            {
-                VoiceInstructionsManager.TryAgain();
+                voiceInstructionsManager.OpenThePhone();
             }
         }
 
-        private void runMission()
+    private void RunMission()
         {
-            cameraIds = webCameraControl.GetVideoCaptureDevices();
-            //cameraIds.
-            //var cameraIdEnum = cameraIds.GetEnumerator();
-            //while (cameraIdEnum.Current == null)
-            //    cameraIdEnum.MoveNext();
-            webCameraControl.StartCapture(cameraIds.Last<WebCameraId>());
-            VoiceInstructionsManager.OpenThePhone(webCameraControl);
-
-            video.Play();
+                video.Play();
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            runMission();
-        }
-
-        private void TypewriteTextblock(string textToAnimate, TextBlock txt, TimeSpan timeSpan)
-        {
-            Storyboard story = new Storyboard();
-            story.FillBehavior = FillBehavior.HoldEnd;
-            story.RepeatBehavior = RepeatBehavior.Forever;
-
-            DiscreteStringKeyFrame discreteStringKeyFrame;
-            StringAnimationUsingKeyFrames stringAnimationUsingKeyFrames = new StringAnimationUsingKeyFrames();
-            stringAnimationUsingKeyFrames.Duration = new Duration(timeSpan);
-
-            string tmp = string.Empty;
-            foreach (char c in textToAnimate)
+            button.Visibility = Visibility.Collapsed;
+            video.Visibility = Visibility.Visible;
+            try
             {
-                discreteStringKeyFrame = new DiscreteStringKeyFrame();
-                discreteStringKeyFrame.KeyTime = KeyTime.Paced;
-                tmp += c;
-                discreteStringKeyFrame.Value = tmp;
-                stringAnimationUsingKeyFrames.KeyFrames.Add(discreteStringKeyFrame);
+                RunMission();
             }
-            Storyboard.SetTargetName(stringAnimationUsingKeyFrames, txt.Name);
-            Storyboard.SetTargetProperty(stringAnimationUsingKeyFrames, new PropertyPath(TextBlock.TextProperty));
-            story.Children.Add(stringAnimationUsingKeyFrames);
-
-            story.Begin(txt);
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
 
         private void DrawRectangle(BitmapSource bs)
@@ -184,8 +154,20 @@ namespace AIPhone
             surprise.Content = faces[0].FaceAttributes.Emotion.Surprise.ToString();
         }
 
-        private async void video_MediaEnded(object sender, RoutedEventArgs e)
+        private async void Video_MediaEnded(object sender, RoutedEventArgs e)
         {
+            cameraIds = webCameraControl.GetVideoCaptureDevices();
+            foreach(WebCameraId i in cameraIds)
+            {
+                if(i.Name.Equals("Agama V-1325R"))
+                {
+                    webCameraControl.StartCapture(i);
+                    break;
+                }
+            }
+            
+
+            voiceInstructionsManager.FaceInstruction();
             video.Visibility = Visibility.Hidden;
             Center.Visibility = Visibility.Visible;
             Bitmap image;
@@ -214,7 +196,7 @@ namespace AIPhone
                     }
 
 
-                    if (await faceRecManager.isGroupTrained())
+                    if (await faceRecManager.IsGroupTrained())
                     {
                         agentName = await faceRecManager.FindAgentName(guids);
                         
@@ -225,7 +207,8 @@ namespace AIPhone
                 await Task.Delay(1000);
             } while (!detected);
 
-            await Task.Delay(20000);
+            voiceInstructionsManager.FaceSuccsided();
+            await Task.Delay(10000);
 
             webCameraControl.StopCapture();
 

@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Threading;
 using System.Drawing;
 
 namespace AIPhone
@@ -31,35 +26,44 @@ namespace AIPhone
 
         public void EnterCode()
         {
-            System.Media.SoundPlayer player = new System.Media.SoundPlayer(@"Assets/Sounds/missionAI1.wav");
-            
-            while (!code)
-            {
-                player.Play();
-                Thread.Sleep(2000);
-            }
-            
+            System.Media.SoundPlayer player = new System.Media.SoundPlayer(@"Assets/Sounds/AI1.wav");
+            player.Play();
         }
 
-        public void OpenThePhone(WebEye.Controls.Wpf.WebCameraControl cameraControl)
+        public void OpenThePhone()
         {
-            System.Media.SoundPlayer player = new System.Media.SoundPlayer(@"Assets/Sounds/missionAI1.wav");
-
-            while (!open)
-            {
-                player.Play();
-                //Thread.Sleep(10000);
-                Bitmap image =  cameraControl.GetCurrentImage();
-                double res = getDominantColor(image);
-                if (res > threshold)
-                    open = true;
-            }
-            Thread.Sleep(2000);
+            System.Media.SoundPlayer player = new System.Media.SoundPlayer(@"Assets/Sounds/AI2.wav");
+            player.PlaySync();
         }
 
-        public void TryAgain()
+        public void FaceInstruction()
         {
+            System.Media.SoundPlayer player = new System.Media.SoundPlayer(@"Assets/Sounds/AI3.wav");
+            player.Play();
+        }
 
+        public void FaceSuccsided()
+        {
+            System.Media.SoundPlayer player = new System.Media.SoundPlayer(@"Assets/Sounds/AI4.wav");
+            player.Play();
+        }
+
+        public void SpeechInstructions()
+        {
+            System.Media.SoundPlayer player = new System.Media.SoundPlayer(@"Assets/Sounds/AI5.wav");
+            player.Play();
+        }
+
+        public void OcrInstruction()
+        {
+            System.Media.SoundPlayer player = new System.Media.SoundPlayer(@"Assets/Sounds/AI6.wav");
+            player.Play();
+        }
+
+        public void finish()
+        {
+            System.Media.SoundPlayer player = new System.Media.SoundPlayer(@"Assets/Sounds/AI7.wav");
+            player.Play();
         }
 
         public double getDominantColor(Bitmap bmp)
@@ -87,7 +91,5 @@ namespace AIPhone
             double avB = Convert.ToDouble(b) / total;
             return (avR + avG + avB) / 3;
         }
-
-
     }
 }

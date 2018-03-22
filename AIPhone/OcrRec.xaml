@@ -6,13 +6,13 @@
         Loaded="Window_Loaded">
     <Grid x:Name="BackPanel">
         <Grid.RowDefinitions>
-            <RowDefinition Height="18.3*"/>
-            <RowDefinition Height="50.0*"/>
-            <RowDefinition Height="30.7*"/>
+            <RowDefinition Height="250"/>
+            <RowDefinition Height="600"/>
+            <RowDefinition Height="516"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid.Background>
-                <ImageBrush ImageSource="Assets/171_ai_banner1.png" Stretch="UniformToFill"/>
+                <ImageBrush ImageSource="Assets/TopScreen.png"/>
             </Grid.Background>
         </Grid>
         <Grid Grid.Row="1">
@@ -30,9 +30,9 @@
         </Grid>
         <Grid Grid.Row="2">
             <Grid.Background>
-                <ImageBrush ImageSource="Assets/171_ai_banner2.png" Stretch="UniformToFill"/>
+                <ImageBrush ImageSource="Assets/BottemScreen.png"/>
             </Grid.Background>
-            <Label Content="In order to initiate the &#xD;&#xA;self-destruction protocol, &#xD;&#xA;use your secrete marker to &#xD;&#xA;remove unnecessary data &#xD;&#xA;from the code page." HorizontalAlignment="Left" Margin="42,42,0,0" VerticalAlignment="Top" Foreground="White" FontWeight="Bold" FontSize="48" Height="372"/>
+            <Label Content="Color out the wrong names &#xD;&#xA;from the suspects page. &#xD;&#xA;&#xD;&#xA;Hint: 07N2457" HorizontalAlignment="Left" Margin="37,104,0,0" VerticalAlignment="Top" Foreground="White" FontWeight="Bold" FontSize="48" Height="372"/>
         </Grid>
     </Grid>
 </Page>

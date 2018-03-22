@@ -12,8 +12,15 @@ namespace AIPhone
 {
     class OCRRecMananger
     {
-        private readonly VisionServiceClient ocrServiceClient =
-            new VisionServiceClient("3268f68e2f73460d82982b5086991565", "https://westcentralus.api.cognitive.microsoft.com/vision/v1.0");
+        private CloudCreds cloudCreds;
+        private readonly VisionServiceClient ocrServiceClient;
+
+        public OCRRecMananger()
+        {
+            cloudCreds = CloudCreds.GetInstance();
+            ocrServiceClient = new VisionServiceClient(cloudCreds.VisionAPIKey, cloudCreds.VisionAPIUrl);
+        }
+
 
         public async Task<string> UploadAndDetectText(Bitmap image)
         {

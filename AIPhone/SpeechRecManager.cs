@@ -9,8 +9,7 @@ namespace AIPhone
 {
     class SpeechRecManager
     {
-        const string key = "937eadf7077443c98a1d00f4c788c9ea";
-
+        private CloudCreds cloudCreds;
         private MicrophoneRecognitionClient speechClient;
         private object speechClientLocker = new object();
 
@@ -20,7 +19,8 @@ namespace AIPhone
 
         public SpeechRecManager()
         {
-            speechClient = SpeechRecognitionServiceFactory.CreateMicrophoneClient(SpeechRecognitionMode.LongDictation, "en-US", key);
+            cloudCreds = CloudCreds.GetInstance();
+            speechClient = SpeechRecognitionServiceFactory.CreateMicrophoneClient(SpeechRecognitionMode.LongDictation, "en-US",cloudCreds.SpeechAPIKey);
             speechClient.OnPartialResponseReceived += OnPartialResponseReceived;
             speechClient.OnResponseReceived += OnResponseReceived;
             speechClient.OnMicrophoneStatus += (s, e) => Console.WriteLine(e.Recording);
@@ -48,7 +48,7 @@ namespace AIPhone
                 {
                     lock (speechClientLocker)
                     {
-                        speechClient = SpeechRecognitionServiceFactory.CreateMicrophoneClient(SpeechRecognitionMode.LongDictation, "en-US", key);
+                        speechClient = SpeechRecognitionServiceFactory.CreateMicrophoneClient(SpeechRecognitionMode.LongDictation, "en-US", cloudCreds.SpeechAPIKey);
                         speechClient.OnPartialResponseReceived += OnPartialResponseReceived;
                         speechClient.OnResponseReceived += OnResponseReceived;
                         speechClient.StartMicAndRecognition(); 

@@ -21,6 +21,7 @@ namespace AIPhone
     public partial class SpeechPage : Page
     {
         private SpeechRecManager speechManager;
+        VoiceInstructionsManager voiceInstructionsManager;
 
         private List<String> wordsToDetect;
 
@@ -40,6 +41,8 @@ namespace AIPhone
             wordsToDetect.Add("rain");
             wordsToDetect.Add("electronics");
             wordsToDetect.Add("sunny");
+            voiceInstructionsManager = VoiceInstructionsManager.Instance;
+            voiceInstructionsManager.SpeechInstructions(); 
         }
 
         private void TextArrived(string str)
@@ -79,7 +82,7 @@ namespace AIPhone
             speechManager.Start();
         }
 
-        private async void done()
+        private void done()
         {
             lock (isDoneLocker)
             {
@@ -87,8 +90,6 @@ namespace AIPhone
                 isDone = true;
             }
             speechManager.Stop();
-            InstructionLabel.Content = "Congratulations all missiles are disabled!";
-            await Task.Delay(10000);
 
             NavigationService navService = NavigationService.GetNavigationService(this);
 

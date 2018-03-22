@@ -13,10 +13,16 @@ namespace AIPhone
 {
     class FaceRecManager
     {
-        private readonly IFaceServiceClient faceServiceClient =
-          new FaceServiceClient("d9d7d017ef4c427ebb0b3aa881a5447b", "https://westcentralus.api.cognitive.microsoft.com/face/v1.0/");
+        private CloudCreds cloudCreds;
+        private readonly IFaceServiceClient faceServiceClient;
 
         private string persongroupid = "aiphone";
+
+        public FaceRecManager()
+        {
+            cloudCreds = CloudCreds.GetInstance();
+            faceServiceClient = new FaceServiceClient(cloudCreds.FaceAPIKey,cloudCreds.FaceAPIUrl);
+        }
 
         //// Returns a string that describes the given face.
 
@@ -129,7 +135,7 @@ namespace AIPhone
             return "007";
         }
 
-        public async Task<bool> isGroupTrained()
+        public async Task<bool> IsGroupTrained()
         {
             try
             {

@@ -4,35 +4,34 @@
         Height="1366" Width="768">
     <Grid x:Name="BackPanel">
         <Grid.RowDefinitions>
-            <RowDefinition Height="18.3*"/>
-            <RowDefinition Height="50.0*"/>
-            <RowDefinition Height="30.7*"/>
+            <RowDefinition Height="250"/>
+            <RowDefinition Height="600"/>
+            <RowDefinition Height="516"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid.Background>
-                <ImageBrush ImageSource="Assets/171_ai_banner1.png" Stretch="UniformToFill"/>
+                <ImageBrush ImageSource="Assets/TopScreen.png"/>
             </Grid.Background>
-            <Button Content="Button" HorizontalAlignment="Left" Height="70" Margin="76,61,0,0" VerticalAlignment="Top" Width="146" />
         </Grid>
         <Grid Grid.Row="1" Background="Black">
-            <MediaElement x:Name="video" Source="Assets/Videos/Earth.mp4" Stretch="Uniform" MediaEnded="video_MediaEnded"/>
-            <Label Name="SpeechResult" Foreground="White" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Top"></Label>
+            <MediaElement x:Name="video" Source="Assets/Videos/Earth.mp4" Stretch="Uniform" MediaEnded="video_MediaEnded" Visibility="Visible"/>
+            <Label Name="SpeechResult" Foreground="White" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Top"/>
             <Grid x:Name="imageGrid" Visibility="Hidden">
+                <Image x:Name="paris" Source="Assets/Missile.png" Margin="349,133,347,361"/>
+                <Image x:Name="moscow" Source="Assets/Missile.png" Margin="469,98,235,390"/>
+                <Image x:Name="telaviv" Source="Assets/Missile.png" Margin="422,198,276,322"/>
+                <Image x:Name="seattle" Source="Assets/Missile.png" Margin="133,187,562,339"/>
+                <Image x:Name="hongkong" Source="Assets/Missile.png" Margin="576,212,124,310"/>
                 <Grid.Background>
                     <ImageBrush ImageSource="Assets/Earth.jpg" Stretch="Uniform"/>
                 </Grid.Background>
-                <Image x:Name="telaviv" Source="Assets/Missile.png" Margin="421,273,305,371"/>
-                <Image x:Name="hongkong" Source="Assets/Missile.png" Margin="578,290,148,354"/>
-                <Image x:Name="paris" Source="Assets/Missile.png" Margin="359,236,367,408"/>
-                <Image x:Name="moscow" Source="Assets/Missile.png" Margin="472,183,254,461"/>
-                <Image x:Name="seattle" Source="Assets/Missile.png" Margin="128,251,598,393" />
             </Grid>
         </Grid>
         <Grid Grid.Row="2">
             <Grid.Background>
-                <ImageBrush ImageSource="Assets/171_ai_banner2.png" Stretch="UniformToFill"/>
+                <ImageBrush ImageSource="Assets/BottemScreen.png"/>
             </Grid.Background>
-            <Label x:Name="InstructionLabel" Content="Your mission is to disarm &#xD;&#xA;missiles headed to the &#xD;&#xA;following cities. &#xD;&#xA;Say the code names for each &#xD;&#xA;city to save it."   HorizontalAlignment="Left" Margin="42,42,0,0" VerticalAlignment="Top" Foreground="White" FontWeight="Bold" FontSize="48" Height="351"/>
+            <Label x:Name="InstructionLabel" Content="Your mission is to disarm &#xD;&#xA;missiles headed to the &#xD;&#xA;following cities. &#xD;&#xA;Say the code names for each &#xD;&#xA;city to save it."   HorizontalAlignment="Left" Margin="35,100,0,0" VerticalAlignment="Top" Foreground="White" FontWeight="Bold" FontSize="48" Height="352"/>
         </Grid>
     </Grid>
 </Page>
