@@ -57,7 +57,7 @@ namespace AIPhone
                 WriteTimeout = 50
             };         
             serial.DataReceived += new SerialDataReceivedEventHandler(RecieveSerial);
-       //     serial.Open();
+            serial.Open();
 
         }
 
