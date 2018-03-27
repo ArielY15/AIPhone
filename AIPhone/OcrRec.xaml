@@ -17,15 +17,14 @@
         </Grid>
         <Grid Grid.Row="1">
             <Grid x:Name="Center">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3*"/>
-                    <ColumnDefinition Width="1*"/>
-                </Grid.ColumnDefinitions>
-                <wpf:WebCameraControl x:Name="webCameraControl" Grid.Column="0"/>
-                <Label Name="ocrResult" Grid.Column="1" Background="Black" FontWeight="Bold" Foreground="White" />
-                <Canvas x:Name="imageCanvas" Grid.Column="0" Visibility="Hidden">
-                    <Rectangle x:Name="rectangle" Width="{Binding ElementName=width}" Height="{Binding ElementName=height}" Canvas.Top="{Binding ElementName=top}" Canvas.Left="{Binding ElementName=left}" Fill="AliceBlue"/>
-                </Canvas>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <wpf:WebCameraControl x:Name="webCameraControl" Grid.Row="1"/>
+                <Grid Grid.Row="0" Background="Black">
+                    <Label Name="ocrResult" Foreground="White"  FontSize="30" HorizontalAlignment="Center"/>
+                </Grid>
             </Grid>
         </Grid>
         <Grid Grid.Row="2">

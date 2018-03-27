@@ -50,9 +50,9 @@ namespace AIPhone
                 await Task.Delay(1000);
             } while (!detected);
             voiceInstructionsManager.finish();
-            Thread.Sleep(10000);
+            Thread.Sleep(12000);
             System.Windows.Forms.Application.Restart();
-            System.Windows.Application.Current.Shutdown();
+            Application.Current.Shutdown();
         }
     }
 }

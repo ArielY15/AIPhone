@@ -57,7 +57,7 @@ namespace AIPhone
                 WriteTimeout = 50
             };         
             serial.DataReceived += new SerialDataReceivedEventHandler(RecieveSerial);
-            serial.Open();
+       //     serial.Open();
 
         }
 
@@ -159,14 +159,13 @@ namespace AIPhone
             cameraIds = webCameraControl.GetVideoCaptureDevices();
             foreach(WebCameraId i in cameraIds)
             {
-                if(i.Name.Equals("Agama V-1325R"))
+                if(i.Name.Equals("Integrated Webcam"/*"Agama V-1325R"*/))
                 {
                     webCameraControl.StartCapture(i);
                     break;
                 }
             }
             
-
             voiceInstructionsManager.FaceInstruction();
             video.Visibility = Visibility.Hidden;
             Center.Visibility = Visibility.Visible;

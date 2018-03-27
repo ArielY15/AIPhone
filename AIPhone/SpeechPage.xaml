@@ -14,10 +14,10 @@
             </Grid.Background>
         </Grid>
         <Grid Grid.Row="1" Background="Black">
-            <MediaElement x:Name="video" Source="Assets/Videos/Earth.mp4" Stretch="Uniform" MediaEnded="video_MediaEnded" Visibility="Visible"/>
+            <MediaElement x:Name="video" Source="Assets/Videos/Earth.mp4" Stretch="Uniform" MediaEnded="video_MediaEnded" Visibility="Hidden"/>
             <Label Name="SpeechResult" Foreground="White" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-            <Grid x:Name="imageGrid" Visibility="Hidden">
-                <Image x:Name="paris" Source="Assets/Missile.png" Margin="349,133,347,361"/>
+            <Grid x:Name="imageGrid" Visibility="Visible">
+                <Image x:Name="paris" Source="Assets/Missile.png" Margin="356,148,340,346"/>
                 <Image x:Name="moscow" Source="Assets/Missile.png" Margin="469,98,235,390"/>
                 <Image x:Name="telaviv" Source="Assets/Missile.png" Margin="422,198,276,322"/>
                 <Image x:Name="seattle" Source="Assets/Missile.png" Margin="133,187,562,339"/>

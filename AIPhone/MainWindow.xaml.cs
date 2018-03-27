@@ -7,7 +7,7 @@ namespace AIPhone
         public MainWindow()
         {
             InitializeComponent();
-            _mainFrame.Navigate(new OcrRec());
+            _mainFrame.Navigate(new FacePage());
         }
        
     }
